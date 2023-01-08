@@ -1,7 +1,6 @@
 # Fire Propagation Simulator
 
-A simple fire simulator represented by a matrix of weights (different red scales)
-using [Typescript](http://typescriptlang.org/), HTML e CSS.
+A simple fire propagation simulator represented by a matrix of weights (representing different scales of red) using [Typescript](http://typescriptlang.org/), HTML e CSS.
 
 ## Installation
 
