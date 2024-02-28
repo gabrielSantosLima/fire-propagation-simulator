@@ -1,0 +1,77 @@
+@import './colors.css';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#app {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+}
+
+#app .inline {
+    width: 100vw;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+#app .inline .fire {
+    --fire-bg: #000000;
+    cursor: cell;
+    background-color: var(--fire-bg);
+    flex: 1;
+}
+
+#app .inline .fire:hover {
+    background-color: #242424;
+}
+
+#app .inline .fire.l0 {
+    --fire-bg: #000000;
+}
+
+#app .inline .fire.l10 {
+    --fire-bg: #ff0000;
+}
+
+#app .inline .fire.l9 {
+    --fire-bg: #ff5c00;
+}
+
+#app .inline .fire.l8 {
+    --fire-bg: #ff6b00;
+}
+
+#app .inline .fire.l7 {
+    --fire-bg: #ff7a00;
+}
+
+#app .inline .fire.l6 {
+    --fire-bg: #ffa800;
+}
+
+#app .inline .fire.l5 {
+    --fire-bg: #ffd600;
+}
+
+#app .inline .fire.l4 {
+    --fire-bg: #fbe36bde;
+}
+
+#app .inline .fire.l3 {
+    --fire-bg: #dcd6b6d6;
+}
+
+#app .inline .fire.l2 {
+    --fire-bg: #fff9dc6e;
+}
+
+#app .inline .fire.l1 {
+    --fire-bg: rgba(135, 135, 135, 0.349);
+}

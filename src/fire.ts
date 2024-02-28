@@ -3,8 +3,6 @@ interface Config {
     propagation: number;
 }
 
-type CallbackPropagation = (x: number, y: number, propagation: number) => void;
-
 class Fire {
     public data: number[][];
     private config: Config;
@@ -19,17 +17,16 @@ class Fire {
         return this.data.length === 0;
     }
 
-    private addPropagation(
-        row: number,
-        column: number,
-        propagation: number,
-        onPropagate?: CallbackPropagation
-    ) {
-        const { size } = this.config;
+    private addPropagation(row: number, column: number, propagation: number) {
+        const { size, propagation: maxPropagation } = this.config;
         if (column >= 0 && column < size && row >= 0 && row < size) {
-            this.data[row][column] +=
-                this.data[row][column] + propagation >= 0 ? propagation : 0;
-            onPropagate?.(column, row, propagation);
+            const newLevel = this.data[row][column] + propagation;
+            this.data[row][column] =
+                newLevel >= 0
+                    ? newLevel <= maxPropagation
+                        ? newLevel
+                        : maxPropagation
+                    : 0;
         }
     }
 
@@ -43,10 +40,14 @@ class Fire {
     }
 
     putOut() {
+        const chance = 0.2;
         const { size } = this.config;
         for (let row = 0; row < size; row++)
-            for (let column = 0; column < size; column++)
-                this.addPropagation(row, column, -1);
+            for (let column = 0; column < size; column++) {
+                const chanceOfPutOut = Math.random();
+                if (chanceOfPutOut < chance)
+                    this.addPropagation(row, column, -1);
+            }
     }
 
     reset() {
@@ -54,7 +55,7 @@ class Fire {
         this.initData();
     }
 
-    propagate(x: number, y: number, onPropagate?: CallbackPropagation) {
+    propagate(x: number, y: number) {
         const { propagation, size } = this.config;
         let currentPropagation = propagation;
 
@@ -64,39 +65,19 @@ class Fire {
 
             for (let column = x - level; column <= x + level; column++) {
                 let row = y - level;
-                this.addPropagation(
-                    row,
-                    column,
-                    currentPropagation,
-                    onPropagate
-                );
+                this.addPropagation(row, column, currentPropagation);
 
                 if (level !== 0) {
                     row = y + level;
-                    this.addPropagation(
-                        row,
-                        column,
-                        currentPropagation,
-                        onPropagate
-                    );
+                    this.addPropagation(row, column, currentPropagation);
                 }
             }
             for (let row = y - level + 1; row < y + level; row++) {
                 let column = x - level;
-                this.addPropagation(
-                    row,
-                    column,
-                    currentPropagation,
-                    onPropagate
-                );
+                this.addPropagation(row, column, currentPropagation);
                 if (level !== 0) {
                     column = x + level;
-                    this.addPropagation(
-                        row,
-                        column,
-                        currentPropagation,
-                        onPropagate
-                    );
+                    this.addPropagation(row, column, currentPropagation);
                 }
             }
             currentPropagation--;
