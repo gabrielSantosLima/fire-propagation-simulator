@@ -2,7 +2,7 @@ import { Fire } from './fire';
 
 const app = document.querySelector<HTMLDivElement>('#app');
 
-const GRID_SIZE = [50, 50];
+const GRID_SIZE = [100, 100];
 const FPS = 15;
 const fire = new Fire({
     size: GRID_SIZE[0],
